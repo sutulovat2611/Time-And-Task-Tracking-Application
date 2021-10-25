@@ -1,0 +1,77 @@
+<html>
+   <head>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+      <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+   </head>
+   <style>
+      body {
+      font-family: monospace !important;
+      }
+      span{
+      font-family: monospace !important;
+      }
+      h3{
+      font-family: monospace !important;
+      }
+   </style>
+   <body>
+     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+
+     <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
+
+     <!-- Add Firebase products that you want to use -->
+     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <!-- Always shows a header, even in smaller screens. -->
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css" />
+         <header class="mdl-layout__header mdl-shadow--16dp">
+            <div class="mdl-layout__header-row">
+               <!-- Title -->
+               <span class="mdl-layout-title" id="nameOfTheProject">
+               </span>
+               <!-- Add spacer, to align navigation to the right -->
+               <div class="mdl-layout-spacer"></div>
+               <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400" onclick="window.location = 'lecturermainpage.html'"> Back </button>
+            </div>
+         </header>
+         <div class="mdl-layout__drawer">
+           <span class="mdl-layout-title">Time Tracker</span>
+           <nav class="mdl-navigation">
+             <a class="mdl-button mdl-js-button mdl-js-ripple-effect"  href="lecturermainpage.html" style = "font-family: monospace !important ">Main page</a>
+             <a class="mdl-button mdl-js-button mdl-js-ripple-effect" onclick = logOut() style = "font-family: monospace !important ">Log out</a>
+           </nav>
+         </div>
+
+
+         <main class="mdl-layout__content">
+            <div class="page-content" style="overflow-x:auto;">
+               <table class="mdl-data-table mdl-js-data-table" id="tableForTeamsInProject" style = "width:80%;font-size: 18px; position:relative; left:150px; top: 20px" >
+                  <thead>
+                     <tr class="mdl-color--amber-400">
+                        <th class="mdl-data-table__cell--non-numeric" style = "font-size: 15px; width:100%">List of currently added teams</th>
+                        <th></th>
+                        <th></th>
+                     </tr>
+                     <tr>
+                        <th style = "font-size: 15px;text-align: center;">Team</th>
+                        <th class="mdl-data-table__cell--non-numeric" style = "font-size: 15px;text-align: center;">No. of members</th>
+                        <th></th>
+                     </tr>
+                  </thead>
+                  <tbody id="tableForTeamsInProjectContent">
+                  </tbody>
+               </table>
+            </div>
+            <script src="scripts/fireBase.js"></script>
+            <script src="scripts/classes.js"></script>
+            <script src="scripts/listofteams.js"></script>
+         </main>
+      </div>
+   </body>
+</html>

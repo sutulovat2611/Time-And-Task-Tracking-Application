@@ -1,0 +1,79 @@
+<html>
+   <head>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+      <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+   </head>
+   <style>
+      body {
+      font-family: monospace !important;
+      }
+      span{
+      font-family: monospace !important;
+      }
+      h3{
+      font-family: monospace !important;
+      }
+   </style>
+   <body>
+      <!-- Always shows a header, even in smaller screens. -->
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" >
+
+         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css" />
+         <header class="mdl-layout__header mdl-shadow--16dp">
+            <div class="mdl-layout__header-row" style="flex-wrap: wrap;">
+               <!-- Title -->
+               <span class="mdl-layout-title">Main page: Lecturer </span>
+
+               <!-- Add spacer, to align navigation to the right -->
+               <div class="mdl-layout-spacer"></div>
+               <!-- Navigation. We hide it in small screens. -->
+               <nav>
+               <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400" onclick="window.location = 'createanewproject.html'">+ Add a new project </button>
+             </nav>
+            </div>
+         </header>
+         <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Main page</span>
+            <nav class="mdl-navigation">
+               <a class="mdl-button mdl-js-button mdl-js-ripple-effect" onclick = logOut() style = "font-family: monospace !important ">Log out</a>
+            </nav>
+
+         </div>
+         <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+         <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+
+         <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+         <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
+
+         <!-- Add Firebase products that you want to use -->
+         <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
+         <main class="mdl-layout__content">
+         <!-- MDL progress bar , indeterminate -->
+         <div class="bar" style="  border: 1px solid #666; height: 20px; width: 100%;">
+            <div class="in" style="animation: fill 3s linear 1; height: 100%; background-color: #FCD12A;"></div>
+         </div>
+         <style>
+         @keyframes fill {
+            0% {
+              width: 0%;
+            }
+            100% {
+              width: 100%;
+            }
+          }</style>
+            <div class="page-content">
+               <div class="mdl-grid" id="projectDisplay">
+                  <div class="mdl-cell mdl-cell--4-col">
+                  </div>
+               </div>
+            </div>
+            <script src="scripts/fireBase.js"></script>
+            <script src="scripts/classes.js"></script>
+            <script src="scripts/lecturermainpage.js"></script>
+         </main>
+      </div>
+   </body>
+</html>

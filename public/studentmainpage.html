@@ -1,0 +1,74 @@
+<html>
+   <head>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+      <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+      <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+   </head>
+   <style>
+      body {
+      font-family: monospace !important;
+      }
+      span{
+      font-family: monospace !important;
+      }
+      h3{
+      font-family: monospace !important;
+      }
+   </style>
+   <body>
+      <!-- Always shows a header, even in smaller screens. -->
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css" />
+         <header class="mdl-layout__header mdl-shadow--16dp">
+            <div class="mdl-layout__header-row">
+               <!-- Title -->
+               <span class="mdl-layout-title">Main page: Student </span>
+            </div>
+         </header>
+         <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Main page</span>
+            <nav class="mdl-navigation">
+               <button class="mdl-button mdl-js-button mdl-js-ripple-effect" style = "font-family: monospace !important " onclick = "logOut()">Log out</button>
+            </nav>
+         </div>
+         <main class="mdl-layout__content">
+            <!-- MDL progress bar , indeterminate -->
+         <div class="bar" style="  border: 1px solid #666; height: 20px; width: 100%;">
+            <div class="in" style="animation: fill 3s linear 1; height: 100%; background-color: #FCD12A;"></div>
+         </div>
+         <style>
+         @keyframes fill {
+            0% {
+              width: 0%;
+            }
+            100% {
+              width: 100%;
+            }
+          }</style>
+            <div class="page-content">
+              <h3><div class="mdl-grid" id = "student_id" style = "font-family: monospace !important "></div><h3>
+               <!-- Your content goes here -->
+               <div class="mdl-grid" id = "projectDisplay">
+
+               </div>
+            </div>
+
+            <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+
+            <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+            <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
+
+            <!-- Add Firebase products that you want to use -->
+            <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
+
+            <script src="scripts/fireBase.js"></script>
+            <script src="scripts/classes.js"></script>
+            <script src="scripts/studentmainpage.js"></script>
+         </main>
+      </div>
+   </body>
+</html>

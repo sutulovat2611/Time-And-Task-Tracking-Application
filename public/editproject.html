@@ -1,0 +1,185 @@
+<html>
+   <head>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+      <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+      <!-- Import Color Picker library -->
+      <script src="libs/jscolor.js"></script>
+   </head>
+   <style>
+      body {
+      font-family: monospace !important;
+      }
+      span{
+      font-family: monospace !important;
+      }
+      h3{
+      font-family: monospace !important;
+      }
+   </style>
+   <body>
+     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+
+     <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
+
+     <!-- Add Firebase products that you want to use -->
+     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+      <!-- Always shows a header, even in smaller screens. -->
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css" />
+      <header class="mdl-layout__header mdl-shadow--16dp">
+         <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title">Edit project </span>
+            <!-- Add spacer, to align navigation to the right -->
+            <div class="mdl-layout-spacer"></div>
+            <!-- Navigation. We hide it in small screens. -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400" id="doneButton"  onclick="createProject()">Update</button>
+         </div>
+      </header>
+      <div class="mdl-layout__drawer">
+         <span class="mdl-layout-title">Create project </span>
+         <nav class="mdl-navigation">
+            <a class="mdl-button mdl-js-button mdl-js-ripple-effect"  href="lecturermainpage.html" style = "font-family: monospace !important ">Main page</a>
+            <a class="mdl-button mdl-js-button mdl-js-ripple-effect" onclick = logOut() style = "font-family: monospace !important ">Log out</a>
+         </nav>
+      </div>
+      <main class="mdl-layout__content">
+         <div class="page-content">
+            <!-- Your content goes here -->
+         </div>
+         <div class="mdl-grid">
+         <div class="mdl-cell mdl-cell--7-col">
+            <span style="margin-left:20px;padding-bottom:20px">Enter name of the project</span>
+            <!-- Project name -->
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+               <input class="mdl-textfield__input" type="search" id="projectName" style="margin-left:20px">
+               <label class="mdl-textfield__label" for="projectName" style="margin-left:20px">Project name</label>
+            </div>
+            <br/>
+            <!--Remarks -->
+            <span style="margin-left:20px;padding-bottom:20px">Add any remarks that you would like the student to see</span>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+               <input class="mdl-textfield__input" type="search" id="remarks" style="margin-left:20px">
+               <label class="mdl-textfield__label" for="remarks" style="margin-left:20px">Remarks</label>
+            </div>
+            <!-- Start date -->
+            <br/>
+            <span style="margin-left:20px;padding-bottom:20px">Start date of the project</span>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+               <input class="mdl-textfield__input" type="date" id="startDate"style="margin-left:20px;font-size:14">
+            </div>
+            <br/>
+            <!--Due date-->
+            <span style="margin-left:20px;padding-bottom:20px">Due date of the project</span>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+               <input class="mdl-textfield__input" type="date" id="dueDate"style="margin-left:20px;font-size:14">
+            </div>
+            <br/>
+            <br/>
+            <!-- Color for the folder -->
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+               <input  style="margin-left: 20px;" class="mdl-textfield__input jscolor"  type="text"  id="projectColor">
+               <label style="margin-left: 20px;" class="mdl-textfield__label" for="projectColor" >Pick the color of the folder</label>
+            </div>
+            <!-- Dialog to add a new team -->
+            <dialog class="mdl-dialog newTaskDialog" id = "projectCreationDialog" style="width: 30%">
+               <div class="mdl-dialog__content">
+                  <form action="#">
+                     <!--Team name or number -->
+                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="teamName">
+                        <label class="mdl-textfield__label" for="teamName">Name/number of the team</label>
+                     </div>
+                     <!-- Remarks about the team -->
+                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <input class="mdl-textfield__input" type="text" id="teamRemarks">
+                        <label class="mdl-textfield__label" for="teamRemarks">Remarks</label>
+                     </div>
+                  </form>
+               </div>
+               <!--Table with emails of students who are added to the team-->
+               <table class="mdl-data-table mdl-js-data-table"  id="tableForTeamMembers" style = "width:100%;font-size: 18px;" >
+                  <thead>
+                     <tr class="mdl-color--amber-400">
+                        <th class="mdl-data-table__cell--non-numeric" style = "font-size: 15px">Team members</th>
+                        <th style = "font-size: 15px"><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--teal-500" onclick="addTeamMember()">Add</button></th>
+                     </tr>
+                  </thead>
+                  <tbody id="tableForTeamMembersContent">
+                     <tr id="row0">
+                        <td class="mdl-data-table__cell--non-numeric">No members added</td>
+                        <td></td>
+                     </tr>
+                  </tbody>
+               </table>
+               <br/>
+               <br/>
+               <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect " id = "confirmNewTeam" onclick="confirmNewTeam()"  style = "width:30%;">Confirm</button>
+               <button class="mdl-button close mdl-js-button mdl-button--raised mdl-js-ripple-effect " style = "width:30%">Cancel</button>
+            </dialog>
+            <div id= "dialogOutput">
+            </div>
+            <div class="mdl-grid">
+               <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 show-dialog"  style="margin-left: 20px;" id="dialogNewTeam">Add a new team</button>
+               <script>
+                  var dialog = document.querySelector('#projectCreationDialog');
+                  var showModalButton = document.querySelector('.show-dialog');
+                  if (! dialog.showModal) {
+                      dialogPolyfill.registerDialog(dialog);
+                    }
+                    showModalButton.addEventListener('click', function() {
+                      dialog.showModal();
+                    });
+
+                    dialog.querySelector('.close').addEventListener('click', function() {
+                      document.getElementById("teamName").value = "";
+                      document.getElementById("teamRemarks").value = "";
+                      document.getElementById("tableForTeamMembersContent").innerHTML = `<td class="mdl-data-table__cell--non-numeric">No members added</td> <td> </td>`;
+                      dialog.close();
+                      members = [];
+                    });
+               </script>
+            </div>
+         </div>
+         <!-- Table of currrently added teams -->
+         <div class="mdl-cell mdl-cell--5-col" style="overflow-x:auto;">
+            <table class="mdl-data-table mdl-js-data-table" id="tableForTeams" style = "width:100%;font-size: 18px; position:relative;" >
+               <thead>
+                  <tr class="mdl-color--amber-400">
+                     <th class="mdl-data-table__cell--non-numeric" style = "font-size: 15px; width:100%">List of currently added teams</th>
+                     <th></th>
+                     <th></th>
+                     <th></th>
+                  </tr>
+                  <tr>
+                     <th style = "font-size: 15px;text-align: center;">Team</th>
+                     <th class="mdl-data-table__cell--non-numeric" style = "font-size: 15px;text-align: center;">No. of members</th>
+                     <th style = "font-size: 15px;text-align: center;">Edit</th>
+                     <th style = "font-size: 15px;text-align: center;">Delete</th>
+                  </tr>
+               </thead>
+               <tbody id="tableForTeamsContent">
+                  <tr id="row0">
+                     <td class="mdl-data-table__cell--non-numeric" style = "text-align: center;">No teams added</td>
+                     <td></td>
+                     <td></td>
+                  </tr>
+               </tbody>
+            </table>
+            <script src="scripts/fireBase.js"></script>
+            <script src="scripts/classes.js"></script>
+            <script src="scripts/editproject.js"></script>
+
+      </main>
+      </div>
+   </body>
+</html>

@@ -1,0 +1,206 @@
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+
+<style>
+  body {
+    font-family: monospace !important;
+  }
+
+  span {
+    font-family: monospace !important;
+  }
+
+  h3 {
+    font-family: monospace !important;
+  }
+</style>
+
+<body onload=onloadRun()>
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Always shows a header, even in smaller screens. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-green.min.css" />
+    <header class="mdl-layout__header mdl-shadow--16dp">
+
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">Time Tracker</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400"
+          id="doneButtonTaskTracker" onclick="saveChanges()">Done</button>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Time Tracker</span>
+      <nav class="mdl-navigation">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect" onclick = saveChanges()
+          style="font-family: monospace !important ">Main page</a>
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect" onclick=logOut()
+          style="font-family: monospace !important ">Log out</a>
+      </nav>
+    </div>
+
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <!-- Your content goes here -->
+      </div>
+      <dialog class="mdl-dialog newTaskDialog" id="newTaskDialog">
+        <div class="mdl-dialog__content">
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="newTaskInput">
+              <label class="mdl-textfield__label" for="sample3">Enter new task</label>
+            </div>
+          </form>
+        </div>
+
+        <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+          <button type="button" class="mdl-button confirm" id="confirmNewTask">Confirm</button>
+          <button type="button" class="mdl-button close">Cancel</button>
+        </div>
+      </dialog>
+
+      <div id="dialogOutput">
+
+      </div>
+
+      <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet"> </div>
+      <h2 style="text-align:center; font-size: 30px; font-family: monospace" id='nameOfTheProject'></h2>
+      <hr>
+
+      <div class="mdl-grid">
+        <h3 id="teamName"></h3>
+      </div>
+
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--8-col">
+
+          <!--Card for student-->
+          <div id="studentCards">
+
+          </div>
+
+          <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--8-col" style= "width: 93%">
+            <div class="mdl-color-text--primary-contrast mdl-card__supporting-text comments">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 94%;">
+                <input class="mdl-textfield__input" type="text" id="comment" style="color: black; width: 100%;">
+                <label class="mdl-textfield__label" for="comment">Add Comment</label>
+              </div>
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--amber-400"
+                data-upgraded=",MaterialButton,MaterialRipple" onclick="displayComment()">
+                <i class="material-icons" role="presentation"style="color: grey;">check</i>
+                <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+              </button>
+
+              <div class="comment mdl-color-text--grey-700" id="commentSection">
+                <!-- <header class="comment__header">   TEMPLATE COMMENT
+                  <i class="material-icons">person</i>
+                  <div class="comment__author">
+                    <strong>James Splayd</strong>
+                  </div>
+                </header>
+                <div class="comment__text">
+                  In in culpa nulla elit esse. Ex cillum enim aliquip sit sit ullamco ex eiusmod fugiat. Cupidatat ad
+                  minim officia mollit laborum magna dolor tempor cupidatat mollit. Est velit sit ad aliqua ullamco
+                  laborum excepteur dolore proident incididunt in labore elit.
+                </div>
+                <nav class="comment__actions">
+                  <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+                  data-upgraded=",MaterialButton,MaterialRipple" onclick="deleteComment()">
+                  <i class="material-icons" role="presentation">delete_outline</i>
+                  <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+                  </nav>
+                </nav> -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="mdl-cell mdl-cell--4-col"style="overflow-x:auto;">
+          <div class="mdl-grid">
+            <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect show-dialog-2"
+              id="show-dialog">
+              Add new task
+            </button>
+
+            <script>
+              var dialog2 = document.querySelector('#newTaskDialog');
+              var showModalButton2 = document.querySelector('.show-dialog-2');
+              if (!dialog2.showModal) {
+                dialogPolyfill.registerDialog(dialog2);
+              }
+              showModalButton2.addEventListener('click', function () {
+                dialog2.showModal();
+              });
+
+              dialog2.querySelector('.close').addEventListener('click', function () {
+                dialog2.close();
+              });
+            </script>
+          </div>
+
+          <br>
+
+          <table class="mdl-data-table mdl-js-data-table" id="tableForTasks" style="width:65%;font-size: 18px;background-color:#C3FDB8">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric" style="font-size: 15px">No.</th>
+                <th style="font-size: 15px">Tasks</th>
+                <th style="font-size: 15px">%Done</th>
+                <th style="font-size: 15px">Edit</th>
+              </tr>
+              <tr>
+                <td class="mdl-data-table__cell--non-numeric"></td>
+                <td>
+                  <form>
+                    <div class="mdl-selectfield mdl-js-selectfield mdl-selectfield--floating-label">
+                      <select class="mdl-textfield__input" id="completedOrNot" name="completedOrNot"
+                        onchange="displayCompletedOrUncompleted()">
+                        <option value="all">All</option>
+                        <option value="completed">Completed</option>
+                        <option value="uncompleted">Uncompleted</option>
+                      </select>
+                    </div>
+                  </form>
+                </td>
+                <td></td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody id="noTaskAvailable" style="font-size: 22px"></tbody>
+            <tbody id="tableContent">
+            </tbody>
+          </table>
+        </div>
+        </div>
+      </div>
+
+
+      <script src="scripts/fireBase.js"></script>
+      <script src="scripts/classes.js"></script>
+      <script src="scripts/teamtasktracker.js"></script>
+    </main>
+  </div>
+</body>
+
+</html>
